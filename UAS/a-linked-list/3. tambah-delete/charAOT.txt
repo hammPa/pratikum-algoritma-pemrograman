@@ -1,0 +1,15 @@
+Nama    : frida reiss
+NIM     : 33
+Jurusan : titan shifter
+Prodi   : founding titan
+
+Nama    : arumin
+NIM     : 99
+Jurusan : titan shifter
+Prodi   : collosal titan
+
+Nama    : mikasa
+NIM     : 100
+Jurusan : penerbangan
+Prodi   : manuver3d
+

@@ -1,0 +1,261 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+#define MAX_BARANG 5
+#define MAX_JENIS_BARANG 10
+#define MAX_PEMBELI 10
+
+int indexJenisBarang = 0; // jumlahJenisBarangSekarang
+int indexPelanggan = 0; // jumlahPelanggansSekarang
+int id = 1;
+
+
+string namaJenisBarang[MAX_JENIS_BARANG] = {
+    "Sabun", "Minuman", "Makanan Ringan", "Minuman Bubuk", "Shampo Botol",
+    "", "", "", "", ""
+};
+string namaBarang[MAX_JENIS_BARANG][MAX_BARANG] = {
+    {"Lux", "Lifebuoy", "Shinzui", "Dove", "Biore"},
+    {"Sprite Mini", "Sprite", "Fanta", "Teh Pucuk", "Fanta Mini"},
+    {"Malkist Keju", "Chitato", "Roma Kelapa", "Wafello Coklat", "Beng-Beng"},
+    {"Creamy Latte", "Milo", "Torabiko Cappucino", "Dancow", "Beng-Beng Bubuk"},
+    {"Clear Botol", "Dove Botol", "Pantene Botol", "Sunsilk Botol", "Lifebuoy Botol"},
+    {},{},{},{},{}
+};
+float hargaBarang[MAX_JENIS_BARANG][MAX_BARANG] = {
+    {4000, 5000, 4500, 5500, 6000},
+    {3500, 5500, 5500, 3500, 3500},
+    {7000, 3000, 10000, 5500, 2000},
+    {2000, 2500, 2500, 2500, 2000},
+    {14000, 14500, 15500, 12600, 11500},
+    {},{},{},{},{}
+};
+
+typedef struct {
+    string nama;
+    float harga;
+    int jumlahBarang;
+    bool beli = true;
+} Barang;
+
+typedef struct {
+    string namaJenisBarang;
+    Barang barang[MAX_BARANG];
+} JenisBarang;
+
+typedef struct {
+    int idPelanggan;
+    string namaPesanan[MAX_BARANG];
+    int jumlahPesanan[MAX_BARANG];
+    float hargaPesanan[MAX_BARANG];
+    float hargaTotal[MAX_BARANG];
+    float totalBelanja;
+} Pelanggan;
+
+JenisBarang jenisBarang[MAX_JENIS_BARANG];    
+Pelanggan pelanggan[MAX_PEMBELI];
+
+void databaseInit(){
+    // index jenis barang 0
+    for(int i = 0; i < MAX_JENIS_BARANG; i++){
+        jenisBarang[i].namaJenisBarang = namaJenisBarang[i]; 
+        for(int j = 0; j < MAX_BARANG; j++){
+            jenisBarang[i].barang[j].nama = namaBarang[i][j]; // jenisBarang
+            jenisBarang[i].barang[j].harga = hargaBarang[i][j];
+            jenisBarang[i].barang[j].jumlahBarang = 10;
+        }
+        if(jenisBarang[i].namaJenisBarang != "") { // jika nama jenis barang bukan kosong, index++
+            indexJenisBarang++;
+        }
+    }
+}
+
+void displayAll(){
+    string space = " ";
+    string indent = "";
+    bool kosong;
+    int nomor = 1;
+    cout << "---------------------------------------------------" << endl;
+    cout << "| No | Jenis Barang | Nama | Harga | JumlahBarang |" << endl;
+    cout << "---------------------------------------------------" << endl;
+    for(int i = 0; i < MAX_JENIS_BARANG; i++){
+        kosong = jenisBarang[i].namaJenisBarang.empty() || jenisBarang[i].namaJenisBarang == "";
+        if(kosong) break; // jika namaJenisBarang kosong, looping selesai
+        
+            
+        for(int j = 0; j < MAX_BARANG; j++){ // jika tidak kosong
+            kosong = jenisBarang[i].barang[j].nama == "" || jenisBarang[i].barang[j].nama.empty();
+            if(kosong) break; // jika tidak ada nama barang, looping selesai
+            
+            (nomor<10 ? indent = space : indent = "");
+            cout << "| " << nomor << indent << " | " << jenisBarang[i].namaJenisBarang << " ";
+            cout << " | " << jenisBarang[i].barang[j].nama << " ";
+            cout << " | " << jenisBarang[i].barang[j].harga << " ";
+            cout << " | " << jenisBarang[i].barang[j].jumlahBarang << "|" << endl;
+            nomor++;
+        }
+    }
+    cout << "---------------------------------------------------" << endl;
+}
+
+void displayMenu(int *pilihan){
+    cout << "Selamat datang di program kasir" << endl;
+    cout << "Berikut fitur yang tersedia  : " << endl;
+    cout << "1. Menampilkan Semua Stok Barang" << endl;
+    cout << "2. Menambah Stok Barang" << endl;
+    cout << "3. Mencari Barang" << endl;
+    cout << "4. Pembayaran" << endl;
+    cout << "5. Cetak Struk Belanja" << endl;
+    cout << "6. Simpan Data" << endl;
+    cout << "7. Keluar Program" << endl;
+    cout << "Masukkan pilihan anda : ";
+    cin >> *pilihan;
+}
+
+void addNewStock(){
+    if(indexJenisBarang < MAX_JENIS_BARANG){
+        JenisBarang temp;
+        int index = 0;
+        char ulang;
+
+        cout << "Masukkan jenis barang : ";
+        getline(cin, temp.namaJenisBarang);
+        do {
+            // input
+            cout << "Masukkan nama barang ke-" << index+1 << " : ";
+            getline(cin, temp.barang[index].nama);
+            cout << "Masukkan harga barang ke-" << index+1 << " : ";
+            cin >> temp.barang[index].harga;
+            cout << "Masukkan jumlah barang ke-" << index+1 << " : ";
+            cin >> temp.barang[index].jumlahBarang;
+            index++;
+
+            cout << "Tambah barang lain ?(Tidak boleh barang yang sama) y/n : ";
+            cin >> ulang;
+            cin.ignore();
+        } while( (ulang == 'Y' || ulang =='y') && index < MAX_BARANG);
+        if(index == MAX_BARANG) cout << "Sudah Penuh" << endl;
+
+        // setelah ditambahkan ke jenisBarang, index++
+        jenisBarang[indexJenisBarang] = temp;
+        indexJenisBarang++;
+        cout << "Menambah barang berhasil!!" << endl; 
+    }
+    else {
+        cout << "Penyimpanan Barang Penuh" << endl;
+    }
+    cin.get();
+}
+
+
+void searchStock(){
+    string nama;
+    cout << "Masukkan nama barang yang ingin di cari : ";
+    getline(cin, nama);
+    for(int i = 0; i < MAX_JENIS_BARANG; i++){
+        for(int j = 0; j < MAX_BARANG; j++){
+            if(jenisBarang[i].barang[j].nama == nama){
+                cout << "Barang ditemukan, berikut detailnya : " << endl;
+                cout << "Nama barang : " << jenisBarang[i].barang[j].nama << endl;
+                cout << "Harga barang :" << jenisBarang[i].barang[j].harga << endl;
+                cout << "Stok tersedia : " << jenisBarang[i].barang[j].jumlahBarang << endl;
+                return;
+            }
+        }
+    }
+    cout << nama << " tidak ditemukan" << endl; // jika tidak ditemukan
+
+}
+
+void addStock(){
+    int namaJenisBarang, namaBarang, jumlahBarang;
+    int i, j;
+    
+    // setelah init, indexJenisBarang 5, menampilkan jenis barang
+    cout << "Jenis barang tersedia : " << endl;
+    for(i = 0; i < indexJenisBarang; i++) cout << i+1 << "." << jenisBarang[i].namaJenisBarang << endl;
+    
+    cout << "\nMasukkan angka jenis barang yang ingin di tambah : "; // input jenisBarang
+    cin >> namaJenisBarang;
+    
+    system("cls");
+    cout << "Barang yang tersedia : " << endl; // tampilkan barang
+    for(j = 0; j < MAX_BARANG; j++) cout << j+1 << "." << jenisBarang[namaJenisBarang-1].barang[j].nama << endl;
+
+    cout << "\nMasukkan angka barang yang akan ditambah : "; // input barang
+    cin >> namaBarang;
+
+    cout << "Masukkan jumlah barang baru yang akan ditambah : "; // input jumlahBarang
+    cin >> jumlahBarang;
+
+    // pakai -1 karena input dimulai dari 1
+    jenisBarang[namaJenisBarang-1].barang[namaBarang-1].jumlahBarang += jumlahBarang;
+    cout << "Berhasil di tambah!!" << endl;
+}
+
+void inputStock(){
+    int pilih;
+    cout << "1. Jenis barang baru" << endl;
+    cout << "2. Jenis barang yang sudah ada" << endl;
+    cout << "Masukkan pilihan : ";
+    cin >> pilih;
+    cin.ignore();
+    if(pilih==1) addNewStock();
+    else addStock();
+}
+
+
+
+
+
+
+
+int main(){
+
+    int pilihan;
+    bool berhenti = false;
+    databaseInit();
+
+    do {
+        displayMenu(&pilihan);
+        cin.ignore();
+        switch(pilihan){
+            case 1:
+                system("cls");
+                displayAll();
+                break;
+            case 2:
+                system("cls");
+                inputStock();
+                break;
+            case 3:
+                system("cls");
+                searchStock();
+                cout << "Klik apa saja untuk kembali" << endl;
+                cin.get();
+                break;
+            case 4:
+                system("cls");
+                // payment();
+                break;
+            case 5:
+                system("cls");
+                // strukPembayaran();
+                break;
+            case 6:
+                system("cls");
+                // saveStrukInFile();
+                break;
+            case 7:
+                berhenti = true;
+                break;
+            default:
+                cout << "Pilihan tidak valid" << endl;
+                break;
+        }
+    } while(!berhenti);
+    
+    return 0;
+}

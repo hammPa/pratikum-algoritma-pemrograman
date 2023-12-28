@@ -1,0 +1,35 @@
+Nama    : ereh
+NIM     : 999
+Jurusan : teknik genosida
+Prodi   : founding titan
+
+Nama    : armin
+NIM     : 99
+Jurusan : teknik permusuhan
+Prodi   : collosan titan
+
+Nama    : r
+NIM     : 5
+Jurusan : r
+Prodi   : r
+
+Nama    : b
+NIM     : 2
+Jurusan : b
+Prodi   : b
+
+Nama    : a
+NIM     : 1
+Jurusan : a
+Prodi   : a
+
+Nama    : mikasa
+NIM     : 9
+Jurusan : teknik penerbangan
+Prodi   : manuver 3d
+
+Nama    : annie
+NIM     : 9999
+Jurusan : teknik penendangan
+Prodi   : female titan
+

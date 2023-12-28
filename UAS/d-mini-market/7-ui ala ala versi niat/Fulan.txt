@@ -1,0 +1,29 @@
+ID : 1
+Nama pesanan ke-1 : Milo
+Jumlah pesanan ke-1 : 10
+Harga pesanan ke-1 : 2500
+
+Nama pesanan ke-1 : Sprite
+Jumlah pesanan ke-1 : 5
+Harga pesanan ke-1 : 5500
+
+Total Belanja pesanan ke-1 : 52500
+
+ID : 1
+Nama pesanan ke-1 : Milo
+Jumlah pesanan ke-1 : 10
+Harga pesanan ke-1 : 2500
+
+Nama pesanan ke-1 : Sprite
+Jumlah pesanan ke-1 : 5
+Harga pesanan ke-1 : 5500
+
+Total Belanja pesanan ke-1 : 52500
+
+ID : 2
+Nama pesanan ke-2 : Milo
+Jumlah pesanan ke-2 : 3
+Harga pesanan ke-2 : 2500
+
+Total Belanja pesanan ke-2 : 7500
+

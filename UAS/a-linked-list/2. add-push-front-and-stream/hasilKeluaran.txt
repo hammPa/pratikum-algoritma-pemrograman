@@ -1,0 +1,25 @@
+Nama    : ai_bluebird
+NIM     : 1001
+Jurusan : sekolah bisnis manajemen
+Prodi   : teknologi informasi
+
+Nama    : rindhiani
+NIM     : 17
+Jurusan : elektronika
+Prodi   : informatika
+
+Nama    : ahda
+NIM     : 99
+Jurusan : ekonomi
+Prodi   : akuntansi
+
+Nama    : ilham
+NIM     : 8
+Jurusan : elektronika
+Prodi   : informatika
+
+Nama    : restu
+NIM     : 16
+Jurusan : elektronika
+Prodi   : informatika
+
